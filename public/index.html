@@ -5,51 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Booking System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Roboto', sans-serif;
+        }
+        h1 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #007bff;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .card-custom {
+            background-color: #f8f9fa;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        .card-custom:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card-title {
+            font-weight: 600;
+            color: #007bff;
+        }
+        .btn-primary, .btn-danger {
+            border-radius: 30px;
+            font-size: 0.9rem;
+            padding: 8px 20px;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .form-group label {
+            font-weight: 500;
+        }
+        .events-list-section {
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Event Booking System</h1>
+    <div class="container mt-5">
+        <h1 class="text-center">Event Booking System</h1>
 
-        <!-- User registration form -->
-        <h2>Register</h2>
-        <form id="registerForm">
-            <input type="text" id="username" placeholder="Username" required />
-            <input type="password" id="password" placeholder="Password" required />
-            <button type="submit">Register</button>
-        </form>
+        <!-- User Authentication Forms Section -->
+        <div class="row">
+            <!-- User Registration Form -->
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h2>Register</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" class="form-control" placeholder="Enter Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Register</button>
+                    </form>
+                </div>
+            </div>
 
-        <!-- User login form -->
-        <h2>Login</h2>
-        <form id="loginForm">
-            <input type="text" id="loginUsername" placeholder="Username" required />
-            <input type="password" id="loginPassword" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
-
-        <!-- Add Event Form (Initially hidden) -->
-        <div id="addEventSection" style="display: none;">
-            <h2>Add Event</h2>
-            <form id="addEventForm">
-                <input type="text" id="eventTitle" placeholder="Event Title" required />
-                <input type="number" id="eventSlots" placeholder="Available Slots" required />
-                <input type="datetime-local" id="eventDate" required />
-                <button type="submit">Add Event</button>
-            </form>
+            <!-- User Login Form -->
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" id="loginUsername" class="form-control" placeholder="Enter Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- Update Event Slots Form (Initially hidden) -->
-        <div id="updateEventSection" style="display: none;">
-            <h2>Update Event Slots</h2>
-            <form id="updateEventForm">
-                <input type="number" id="updateEventId" placeholder="Event ID" required />
-                <input type="number" id="updateEventSlots" placeholder="New Slots" required />
-                <button type="submit">Update Slots</button>
-            </form>
+        <!-- Event Management Forms -->
+        <div class="row" style="display: none;" id="eventManagementForms">
+            <!-- Add Event Form -->
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h2>Add Event</h2>
+                    <form id="addEventForm">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title</label>
+                            <input type="text" id="eventTitle" class="form-control" placeholder="Enter Event Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventSlots">Available Slots</label>
+                            <input type="number" id="eventSlots" class="form-control" placeholder="Enter Available Slots" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Event Date & Time</label>
+                            <input type="datetime-local" id="eventDate" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Add Event</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Update Event Slots Form -->
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h2>Update Event Slots</h2>
+                    <form id="updateEventForm">
+                        <div class="form-group">
+                            <label for="updateEventId">Event ID</label>
+                            <input type="number" id="updateEventId" class="form-control" placeholder="Enter Event ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateEventSlots">New Slots</label>
+                            <input type="number" id="updateEventSlots" class="form-control" placeholder="Enter New Slots" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Update Slots</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- Events list -->
-        <h2>Events</h2>
-        <div id="eventsList"></div>
+        <!-- Events List Section -->
+        <div class="events-list-section">
+            <h2 class="section-title text-center">Available Events</h2>
+            <div id="eventsList" class="row"></div>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -89,15 +202,13 @@
             if (data.token) {
                 localStorage.setItem('token', data.token);
                 alert('Login successful');
-                document.getElementById('addEventSection').style.display = 'block'; // Show Add Event form
-                document.getElementById('updateEventSection').style.display = 'block'; // Show Update Event form
-                fetchEvents(); // Fetch events after login
+                document.getElementById('eventManagementForms').style.display = 'flex';
+                fetchEvents();
             } else {
                 alert('Login failed');
             }
         });
 
-        // Add Event
         document.getElementById('addEventForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('eventTitle').value;
@@ -141,7 +252,7 @@
             try {
                 const token = localStorage.getItem('token');
                 const response = await fetch('/events', {
-                    headers: { 'Authorization': `Bearer ${token}` } // Include token in header
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
 
                 if (!response.ok) {
@@ -152,12 +263,14 @@
                 const events = await response.json();
                 const eventsList = document.getElementById('eventsList');
                 eventsList.innerHTML = events.map(event => 
-                    `<div class="card mt-3">
-                        <div class="card-body">
-                            <h5 class="card-title">${event.title}</h5>
-                            <p class="card-text">Available Slots: ${event.slots}</p>
-                            <button class="btn btn-primary" onclick="bookEvent(${event.id}, '${localStorage.getItem('token')}')">Book</button>
-                            <button class="btn btn-danger" onclick="deleteEvent(${event.id})">Delete</button>
+                    `<div class="col-md-6">
+                        <div class="card mt-3 card-custom">
+                            <div class="card-body">
+                                <h5 class="card-title">${event.title}</h5>
+                                <p class="card-text">Available Slots: ${event.slots}</p>
+                                <button class="btn btn-primary" onclick="bookEvent(${event.id}, '${localStorage.getItem('token')}')">Book</button>
+                                <button class="btn btn-danger" onclick="deleteEvent(${event.id})">Delete</button>
+                            </div>
                         </div>
                     </div>`
                 ).join('');
@@ -167,56 +280,33 @@
             }
         }
 
-        // Book an event with eventId and token
+        // Book an event
         function bookEvent(eventId, token) {
             socket.emit('book-event', { eventId, token });
         }
 
-        // Delete an event
-
-
+        // Delete event
         async function deleteEvent(eventId) {
-    if (!confirm('Are you sure you want to delete this event?')) {
-        return;
-    }
+            if (!confirm('Are you sure you want to delete this event?')) return;
 
-    const token = localStorage.getItem('token');
-    try {
-        const response = await fetch(`auth/events/delete/${eventId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const data = await response.text(); // Read as text to handle possible non-JSON responses
-
-        if (response.ok) {
-            alert('Event deleted successfully');
-            fetchEvents(); // Refresh events list
-        } else {
-            let errorMessage;
+            const token = localStorage.getItem('token');
             try {
-                const jsonData = JSON.parse(data);
-                errorMessage = jsonData.message;
-            } catch {
-                errorMessage = 'Failed to delete event. No message received.';
+                const response = await fetch(`/auth/events/delete/${eventId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    alert('Event deleted successfully');
+                    fetchEvents();
+                } else {
+                    alert('Failed to delete event');
+                }
+            } catch (error) {
+                console.error('Error deleting event:', error);
+                alert('Error deleting event');
             }
-            alert(`Failed to delete event: ${errorMessage}`);
         }
-    } catch (error) {
-        console.error('Error deleting event:', error);
-        alert(`Error deleting event: ${error.message}`);
-    }
-}
-
-
-
-    
-
-
-
 
         // Listen for event updates
         socket.on('event-updated', (eventId) => {
