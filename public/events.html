@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Booking System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Available Events</h1>
+
+        <!-- Events list -->
+        <div id="eventList" class="mt-4">
+            <!-- Events will be dynamically added here -->
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // const socket = io();
+
+        // Retrieve token from local storage
+        const token = localStorage.getItem('token');
+        
+        const socket = io('http://localhost:3000', {
+    auth: {
+        token: token
+    }
+});
+
+        // If no token, redirect to login page
+        if (!token) {
+            window.location.href = '/';
+        }
+
+        // Fetch and display events
+        async function fetchEvents() {
+            try {
+                const response = await fetch('/events', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to fetch events:', await response.text());
+                    return;
+                }
+
+                const events = await response.json();
+                const eventList = document.getElementById('eventList');
+                
+                if (eventList) { // Check if eventList exists
+                    eventList.innerHTML = events.map(event => `
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">${event.title}</h5>
+                                <p class="card-text">Available Slots: ${event.slots}</p>
+                                <button class="btn btn-primary" onclick="bookEvent(${event.id})">Book</button>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    console.error('Element with ID "eventList" not found.');
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                alert('Error fetching events');
+            }
+        }
+
+        // Book an event
+// Book an event
+function bookEvent(eventId) {
+    const token = localStorage.getItem('token'); // Retrieve the token from local storage
+    if (!token) {
+        alert('You need to log in first!');
+        return;
+    }
+
+    // Send the eventId and the token to the server
+    socket.emit('book-event', { eventId, token });
+}
+
+
+        // Listen for event updates
+        socket.on('event-updated', (eventId) => {
+            alert(`Event ${eventId} has been updated!`);
+            fetchEvents();
+        });
+
+        socket.on('booking-error', (message) => {
+            alert(message);
+        });
+
+        // Fetch events on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchEvents();
+        });
+    </script>
+</body>
+</html>
