@@ -1,0 +1,46 @@
+# Node modules directory
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Dependency directories
+jspm_packages/
+
+# Build output
+dist/
+build/
+
+# Next.js
+.next/
+
+# Vercel
+.vercel/
+
+# Yarn
+yarn-debug.log
+yarn-error.log
+
+# npm
+package-lock.json
+npm-debug.log
+
+# IDE/editor directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.swp
+*.swo
